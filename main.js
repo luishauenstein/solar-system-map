@@ -1,4 +1,7 @@
-import * as THREE from "./node_modules/three/build/three.module.js";
+import * as THREE from "./three/build/three.module.js";
+import { GLTFLoader } from "./three/examples/jsm/loaders/GLTFLoader.js";
+
+console.log("run");
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -8,25 +11,26 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 document.body.appendChild(renderer.domElement);
 
-/*
-const light = new THREE.PointLight(0xff0000, 1, 100);
+const light = new THREE.PointLight(0xffffff, 1, 100);
 light.position.set(0, 0, 0);
 scene.add(light);
-*/
 
-/*
 const loader = new GLTFLoader();
+let sun;
 loader.load(
   "./lowpolyplanets/sun/model.gltf",
   function (gltf) {
-    scene.add(gltf.scene);
+    sun = gltf.scene;
+    sun.position.x = 0;
+    sun.position.y = 0;
+    sun.position.z = 0;
+    scene.add(sun);
   },
   undefined,
   function (error) {
     console.error(error);
   }
 );
-*/
 
 //sample cube:
 const geometry = new THREE.BoxGeometry();
@@ -42,8 +46,8 @@ camera.lookAt(0, 0, 0);
 function animate() {
   requestAnimationFrame(animate);
 
-  //cube.rotation.x += 0.01;
-  //cube.rotation.y += 0.01;
+  sun && (sun.rotation.y += 0.01);
+  cube.rotation.y += 0.01;
 
   renderer.render(scene, camera);
 }
