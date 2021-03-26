@@ -11,8 +11,8 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 document.body.appendChild(renderer.domElement);
 
-const light = new THREE.PointLight(0xffffff, 1, 100);
-light.position.set(0, 0, 0);
+/*
+const light = new THREE.AmbientLight(0xffffff); // soft white light
 scene.add(light);
 
 const loader = new GLTFLoader();
@@ -31,11 +31,15 @@ loader.load(
     console.error(error);
   }
 );
+*/
+
+const rotationVector = new THREE.Vector3(1, -4, 0).normalize();
 
 //sample cube:
 const geometry = new THREE.BoxGeometry();
-const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
 const cube = new THREE.Mesh(geometry, material);
+cube.lookAt(rotationVector);
 scene.add(cube);
 
 camera.position.z = 10;
@@ -46,8 +50,8 @@ camera.lookAt(0, 0, 0);
 function animate() {
   requestAnimationFrame(animate);
 
-  sun && (sun.rotation.y += 0.01);
-  cube.rotation.y += 0.01;
+  //sun && (sun.rotation.y += 0.005);
+  cube && cube.rotateOnWorldAxis(rotationVector, 0.01);
 
   renderer.render(scene, camera);
 }
