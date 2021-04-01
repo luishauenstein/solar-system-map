@@ -7,7 +7,7 @@ const scene = new THREE.Scene();
 
 //init camera
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(50, 50, 50);
+camera.position.set(50, 50, -50);
 camera.lookAt(0, 0, 0);
 
 const renderer = new THREE.WebGLRenderer();
@@ -20,16 +20,14 @@ const light = new THREE.PointLight();
 light.position.set(100, 50, 50);
 scene.add(light);
 
-const rotationVector = new THREE.Vector3(0, 1, 0).normalize();
-
 let obj;
 const loader = new GLTFLoader();
 loader.load(
-  "./models/saturn.gltf",
+  "./models/earth.gltf",
   function (gltf) {
     obj = gltf.scene;
     obj.position.set(0, 0, 0);
-    obj.lookAt(rotationVector);
+    obj.rotation.x = 120;
     scene.add(obj);
   },
   undefined,
@@ -52,8 +50,8 @@ scene.add(cube);
 function animate() {
   requestAnimationFrame(animate);
 
-  //obj && (obj.rotation.y += 0.005);
-  obj.rotateOnAxis(rotationVector, 0.005);
+  obj && (obj.rotation.y += 0.005);
+  //obj.rotateOnAxis(rotationVector, 0.005);
   //cube && cube.rotateOnWorldAxis(rotationVector, 0.01);
 
   renderer.render(scene, camera);
