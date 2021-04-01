@@ -7,7 +7,7 @@ const scene = new THREE.Scene();
 
 //init camera
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(10, 10, 10);
+camera.position.set(50, 50, 50);
 camera.lookAt(0, 0, 0);
 
 const renderer = new THREE.WebGLRenderer();
@@ -17,17 +17,20 @@ document.body.appendChild(renderer.domElement);
 
 //const light = new THREE.AmbientLight(0xffffff); // soft white light
 const light = new THREE.PointLight();
-light.position.set(50, 5, 5);
+light.position.set(100, 50, 50);
 scene.add(light);
 
+const rotationVector = new THREE.Vector3(0, 1, 0).normalize();
+
+let obj;
 const loader = new GLTFLoader();
-let sun;
 loader.load(
-  "./lowpolyplanets/sun_new.gltf",
+  "./models/saturn.gltf",
   function (gltf) {
-    sun = gltf.scene;
-    sun.position.set(0, 0, 0);
-    scene.add(sun);
+    obj = gltf.scene;
+    obj.position.set(0, 0, 0);
+    obj.lookAt(rotationVector);
+    scene.add(obj);
   },
   undefined,
   function (error) {
@@ -35,10 +38,9 @@ loader.load(
   }
 );
 
-const rotationVector = new THREE.Vector3(1, -4, 0).normalize();
-
 /*
 //sample cube:
+const rotationVector = new THREE.Vector3(1, -4, 0).normalize();
 const geometry = new THREE.BoxGeometry();
 const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
 const cube = new THREE.Mesh(geometry, material);
@@ -50,7 +52,8 @@ scene.add(cube);
 function animate() {
   requestAnimationFrame(animate);
 
-  sun && (sun.rotation.y += 0.005);
+  //obj && (obj.rotation.y += 0.005);
+  obj.rotateOnAxis(rotationVector, 0.005);
   //cube && cube.rotateOnWorldAxis(rotationVector, 0.01);
 
   renderer.render(scene, camera);
