@@ -11,7 +11,7 @@ const scene = new THREE.Scene();
 
 //init camera
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
-camera.position.set(100, 100, 0);
+camera.position.set(250, 250, 0);
 camera.lookAt(0, 0, 0);
 
 //orbit controls for camera
@@ -22,21 +22,58 @@ const light = new THREE.PointLight();
 light.position.set(100, 50, 50);
 scene.add(light);
 
-let obj;
-const loader = new GLTFLoader();
-loader.load(
-  "./models/sun.gltf",
-  function (gltf) {
-    obj = gltf.scene;
-    obj.position.set(0, 0, 0);
-    obj.rotation.x = 120;
-    scene.add(obj);
-  },
-  undefined,
-  function (error) {
-    console.error(error);
+class Planet {
+  constructor(scene, name) {
+    this.name = name;
+    this.url = `./models/${name}.gltf`;
+
+    let obj;
+    const loader = new GLTFLoader();
+    loader.load(
+      this.url,
+      function (gltf) {
+        obj = gltf.scene;
+        obj.position.set(0, 0, 0);
+        obj.rotation.x = 120;
+        scene.add(obj);
+      },
+      undefined,
+      function (error) {
+        console.error(error);
+      }
+    );
+
+    this.object = obj;
+    console.log(this.object);
   }
-);
+
+  rotate() {
+    this.object.rotation.y += 0.05;
+  }
+}
+
+const sun = new Planet(scene, "sun");
+
+// const InstantiatePlanet = () => {
+//   let obj;
+//   const loader = new GLTFLoader();
+//   loader.load(
+//     "./models/sun.gltf",
+//     function (gltf) {
+//       obj = gltf.scene;
+//       obj.position.set(0, 0, 0);
+//       obj.rotation.x = 120;
+//       scene.add(obj);
+//     },
+//     undefined,
+//     function (error) {
+//       console.error(error);
+//     }
+//   );
+//   return obj;
+// };
+
+// const obj = InstantiatePlanet();
 
 /*
 //sample cube:
@@ -51,9 +88,9 @@ scene.add(cube);
 
 function animate() {
   requestAnimationFrame(animate);
+  //obj && (obj.rotation.x += 0.005);
 
-  //obj && (obj.rotation.y += 0.005);
-  //obj.rotateOnAxis(rotationVector, 0.005);
+  sun.rotate();
   //cube && cube.rotateOnWorldAxis(rotationVector, 0.01);
 
   renderer.render(scene, camera);
