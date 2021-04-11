@@ -22,76 +22,63 @@ const light = new THREE.PointLight();
 light.position.set(100, 50, 50);
 scene.add(light);
 
-class Planet {
-  constructor(scene, name) {
-    this.name = name;
-    this.url = `./models/${name}.gltf`;
+// class CelestialObject {
+//   constructor(scene, name) {
+//     //super();
+//     this.name = name;
+//     this.url = `./models/${name}.gltf`;
+//     this.object = null;
 
-    let obj;
-    const loader = new GLTFLoader();
-    loader.load(
-      this.url,
-      function (gltf) {
-        obj = gltf.scene;
-        obj.position.set(0, 0, 0);
-        obj.rotation.x = 120;
-        scene.add(obj);
-      },
-      undefined,
-      function (error) {
-        console.error(error);
-      }
-    );
+//     let obj;
+//     const loader = new GLTFLoader();
+//     loader.load(
+//       this.url,
+//       function (gltf) {
+//         obj = gltf.scene;
+//         obj.position.set(0, 0, 0);
+//         obj.rotation.x = 120;
+//         scene.add(obj);
+//         this.object = obj;
+//         console.log(this.object);
+//       },
+//       undefined,
+//       function (error) {
+//         console.error(error);
+//       }
+//     );
+//   }
 
-    this.object = obj;
-    console.log(this.object);
+//   rotate() {
+//     this.object.rotation.y += 0.05;
+//   }
+// }
+
+// const sun = new CelestialObject(scene, "sun");
+
+const loader = new GLTFLoader();
+let obj;
+loader.load(
+  "./models/earth.gltf",
+  function (gltf) {
+    obj = gltf.scene;
+    obj.position.set(0, 0, 0);
+    obj.rotation.x = 120;
+    scene.add(obj);
+  },
+  undefined,
+  function (error) {
+    console.error(error);
   }
+);
 
-  rotate() {
-    this.object.rotation.y += 0.05;
-  }
-}
-
-const sun = new Planet(scene, "sun");
-
-// const InstantiatePlanet = () => {
-//   let obj;
-//   const loader = new GLTFLoader();
-//   loader.load(
-//     "./models/sun.gltf",
-//     function (gltf) {
-//       obj = gltf.scene;
-//       obj.position.set(0, 0, 0);
-//       obj.rotation.x = 120;
-//       scene.add(obj);
-//     },
-//     undefined,
-//     function (error) {
-//       console.error(error);
-//     }
-//   );
-//   return obj;
-// };
-
-// const obj = InstantiatePlanet();
-
-/*
-//sample cube:
-const rotationVector = new THREE.Vector3(1, -4, 0).normalize();
-const geometry = new THREE.BoxGeometry();
-const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-const cube = new THREE.Mesh(geometry, material);
-cube.lookAt(rotationVector);
-cube.scale.set(2, 2, 2);
-scene.add(cube);
-*/
+const rotate = (obj) => {
+  obj && (obj.rotation.y += 0.005);
+};
 
 function animate() {
   requestAnimationFrame(animate);
-  //obj && (obj.rotation.x += 0.005);
 
-  sun.rotate();
-  //cube && cube.rotateOnWorldAxis(rotationVector, 0.01);
+  rotate(obj);
 
   renderer.render(scene, camera);
 }
