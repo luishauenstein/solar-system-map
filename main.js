@@ -55,12 +55,14 @@ class CelestialObject {
   _OnLoaded(obj) {
     this.transform = obj;
     this.transform.position.set(0, 0, 0);
-    this.transform.rotation.x = 120;
+    this.transform.rotation.x = 0.5;
     scene.add(this.transform);
   }
 }
 
 const earth = new CelestialObject("earth");
+setTimeout(() => earth.transform.position.set(100, 0, 0), 1000);
+const sun = new CelestialObject("sun");
 
 const rotate = (co) => {
   co.transform && (co.transform.rotation.y += 0.005);
@@ -70,6 +72,7 @@ function animate() {
   requestAnimationFrame(animate);
 
   rotate(earth);
+  rotate(sun);
 
   renderer.render(scene, camera);
 }
