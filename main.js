@@ -47,11 +47,12 @@ light6.position.set(0, 0, -lightdist);
 scene.add(light6);
 
 class CelestialObject {
-  constructor(name, rotSpeed = 0.005, tilt = 0.5) {
+  constructor(name, position = new THREE.Vector3(0, 0, 0), rotSpeed = 0.005, tilt = 0.5) {
     this.name = name;
     this.url = `./models/${name}.gltf`;
     this.rotSpeed = rotSpeed;
     this.tilt = tilt;
+    this.initialPos = position;
     this.LoadGLTF();
   }
 
@@ -62,7 +63,7 @@ class CelestialObject {
 
   _OnLoaded(obj) {
     this.transform = obj;
-    this.transform.position.set(0, 0, 0);
+    this.transform.position.set(this.initialPos.x, this.initialPos.y, this.initialPos.z);
     this.transform.rotation.x = this.tilt;
     scene.add(this.transform);
   }
@@ -72,9 +73,10 @@ class CelestialObject {
   }
 }
 
-const earth = new CelestialObject("earth");
-setTimeout(() => earth.transform.position.set(350, 0, 0), 1000);
-const sun = new CelestialObject("sun", 0.001);
+const sun = new CelestialObject("sun", new THREE.Vector3(0, 0, 0), 0.001);
+const mercury = new CelestialObject("mercury", new THREE.Vector3(100, 0, 50));
+const Vvnus = new CelestialObject("venus", new THREE.Vector3(150, 0, -10));
+const earth = new CelestialObject("earth", new THREE.Vector3(250, 0, 0));
 
 function animate() {
   requestAnimationFrame(animate);
