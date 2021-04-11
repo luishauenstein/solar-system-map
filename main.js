@@ -21,28 +21,28 @@ const controls = new OrbitControls(camera, renderer.domElement);
 scene.add(new THREE.AmbientLight(0x101010));
 
 const lightdist = 110;
-const strength = 3;
-const light1 = new THREE.PointLight(0xffffff, strength, 0, 2);
+const strength = 1;
+const light1 = new THREE.PointLight(0xffffff, strength, 0, 3);
 light1.position.set(lightdist, 0, 0);
 scene.add(light1);
 
-const light2 = new THREE.PointLight(0xffffff, strength, 0, 2);
+const light2 = new THREE.PointLight(0xffffff, strength, 0, 3);
 light2.position.set(-lightdist, 0, 0);
 scene.add(light2);
 
-const light3 = new THREE.PointLight(0xffffff, strength, 0, 2);
+const light3 = new THREE.PointLight(0xffffff, strength, 0, 3);
 light3.position.set(0, lightdist, 0);
 scene.add(light3);
 
-const light4 = new THREE.PointLight(0xffffff, strength, 0, 2);
+const light4 = new THREE.PointLight(0xffffff, strength, 0, 3);
 light4.position.set(0, -lightdist, 0);
 scene.add(light4);
 
-const light5 = new THREE.PointLight(0xffffff, strength, 0, 2);
+const light5 = new THREE.PointLight(0xffffff, strength, 0, 3);
 light5.position.set(0, 0, lightdist);
 scene.add(light5);
 
-const light6 = new THREE.PointLight(0xffffff, strength, 0, 2);
+const light6 = new THREE.PointLight(0xffffff, strength, 0, 3);
 light6.position.set(0, 0, -lightdist);
 scene.add(light6);
 
@@ -75,8 +75,11 @@ class CelestialObject {
 
 const sun = new CelestialObject("sun", new THREE.Vector3(0, 0, 0), 0.001);
 const mercury = new CelestialObject("mercury", new THREE.Vector3(100, 0, 50));
-const Vvnus = new CelestialObject("venus", new THREE.Vector3(150, 0, -10));
+const venus = new CelestialObject("venus", new THREE.Vector3(150, 0, -10));
 const earth = new CelestialObject("earth", new THREE.Vector3(250, 0, 0));
+const mars = new CelestialObject("mars", new THREE.Vector3(350, 0, 60));
+const saturn = new CelestialObject("saturn", new THREE.Vector3(550, 0, -100));
+const jupiter = new CelestialObject("jupiter", new THREE.Vector3(800, 0, -20));
 
 function animate() {
   requestAnimationFrame(animate);
