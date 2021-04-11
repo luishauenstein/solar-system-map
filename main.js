@@ -11,74 +11,65 @@ const scene = new THREE.Scene();
 
 //init camera
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
-camera.position.set(250, 250, 0);
+camera.position.set(250, 0, 0);
 camera.lookAt(0, 0, 0);
 
 //orbit controls for camera
 const controls = new OrbitControls(camera, renderer.domElement);
 
-//const light = new THREE.AmbientLight(0xffffff); // soft white light
 const light = new THREE.PointLight();
 light.position.set(100, 50, 50);
 scene.add(light);
 
-// class CelestialObject {
-//   constructor(scene, name) {
-//     //super();
-//     this.name = name;
-//     this.url = `./models/${name}.gltf`;
-//     this.object = null;
-
-//     let obj;
-//     const loader = new GLTFLoader();
-//     loader.load(
-//       this.url,
-//       function (gltf) {
-//         obj = gltf.scene;
-//         obj.position.set(0, 0, 0);
-//         obj.rotation.x = 120;
-//         scene.add(obj);
-//         this.object = obj;
-//         console.log(this.object);
-//       },
-//       undefined,
-//       function (error) {
-//         console.error(error);
-//       }
-//     );
-//   }
-
-//   rotate() {
-//     this.object.rotation.y += 0.05;
-//   }
-// }
-
-// const sun = new CelestialObject(scene, "sun");
-
-const loader = new GLTFLoader();
+/*
 let obj;
-loader.load(
-  "./models/earth.gltf",
-  function (gltf) {
-    obj = gltf.scene;
-    obj.position.set(0, 0, 0);
-    obj.rotation.x = 120;
-    scene.add(obj);
-  },
-  undefined,
-  function (error) {
-    console.error(error);
-  }
-);
+let x = 5;
+async function load() {
+  const loader = new GLTFLoader();
+  await loader
+    .load("./models/earth.gltf", function (gltf) {
+      obj = gltf.scene;
+      obj.position.set(0, 0, 0);
+      obj.rotation.x = 120;
+      scene.add(obj);
+      console.log(obj);
+    })
+    .resolve((i) => console.log(i));
+}
+load();
+setTimeout(() => console.log(obj), 1000);
+*/
 
-const rotate = (obj) => {
-  obj && (obj.rotation.y += 0.005);
+class CelestialObject {
+  constructor(name) {
+    this.name = name;
+    this.url = `./models/${name}.gltf`;
+    this.LoadGLTF();
+  }
+
+  LoadGLTF() {
+    const loader = new GLTFLoader();
+    loader.load(this.url, (gltf) => this._OnLoaded(gltf.scene));
+  }
+
+  _OnLoaded(obj) {
+    this.transform = obj;
+    this.transform.position.set(0, 0, 0);
+    this.transform.rotation.x = 120;
+    scene.add(this.transform);
+  }
+}
+
+const earth = new CelestialObject("earth");
+
+const rotate = (co) => {
+  co.transform && (co.transform.rotation.y += 0.005);
 };
 
 function animate() {
   requestAnimationFrame(animate);
 
-  rotate(obj);
+  rotate(earth);
 
   renderer.render(scene, camera);
 }
