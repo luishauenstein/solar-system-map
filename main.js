@@ -1,6 +1,7 @@
 import * as THREE from "./three/build/three.module.js";
 import { GLTFLoader } from "./three/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from "./three/examples/jsm/controls/OrbitControls.js";
+import CelestialObject from "./CelestialObject.js";
 
 //init webgl renderer
 const renderer = new THREE.WebGLRenderer();
@@ -46,40 +47,13 @@ const light6 = new THREE.PointLight(0xffffff, strength, 0, 3);
 light6.position.set(0, 0, -lightdist);
 scene.add(light6);
 
-class CelestialObject {
-  constructor(name, position = new THREE.Vector3(0, 0, 0), rotSpeed = 0.005, tilt = 0.5) {
-    this.name = name;
-    this.url = `./models/${name}.gltf`;
-    this.rotSpeed = rotSpeed;
-    this.tilt = tilt;
-    this.initialPos = position;
-    this.LoadGLTF();
-  }
-
-  LoadGLTF() {
-    const loader = new GLTFLoader();
-    loader.load(this.url, (gltf) => this._OnLoaded(gltf.scene));
-  }
-
-  _OnLoaded(obj) {
-    this.transform = obj;
-    this.transform.position.set(this.initialPos.x, this.initialPos.y, this.initialPos.z);
-    this.transform.rotation.x = this.tilt;
-    scene.add(this.transform);
-  }
-
-  rotate(factor = 1) {
-    this.transform && (this.transform.rotation.y += this.rotSpeed * factor);
-  }
-}
-
-const sun = new CelestialObject("sun", new THREE.Vector3(0, 0, 0), 0.001);
-const mercury = new CelestialObject("mercury", new THREE.Vector3(100, 0, 50));
-const venus = new CelestialObject("venus", new THREE.Vector3(150, 0, -10));
-const earth = new CelestialObject("earth", new THREE.Vector3(250, 0, 0));
-const mars = new CelestialObject("mars", new THREE.Vector3(350, 0, 60));
-const saturn = new CelestialObject("saturn", new THREE.Vector3(550, 0, -100));
-const jupiter = new CelestialObject("jupiter", new THREE.Vector3(800, 0, -20));
+const sun = new CelestialObject(scene, "sun", new THREE.Vector3(0, 0, 0), 0.001);
+const mercury = new CelestialObject(scene, "mercury", new THREE.Vector3(100, 0, 50));
+const venus = new CelestialObject(scene, "venus", new THREE.Vector3(150, 0, -10));
+const earth = new CelestialObject(scene, "earth", new THREE.Vector3(250, 0, 0));
+const mars = new CelestialObject(scene, "mars", new THREE.Vector3(350, 0, 60));
+const saturn = new CelestialObject(scene, "saturn", new THREE.Vector3(550, 0, -100));
+const jupiter = new CelestialObject(scene, "jupiter", new THREE.Vector3(800, 0, -20));
 
 function animate() {
   requestAnimationFrame(animate);
