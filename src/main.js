@@ -1,6 +1,6 @@
-import * as THREE from "./three/build/three.module.js";
-import { GLTFLoader } from "./three/examples/jsm/loaders/GLTFLoader.js";
-import { OrbitControls } from "./three/examples/jsm/controls/OrbitControls.js";
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+
 import CelestialObject from "./CelestialObject.js";
 
 //init webgl renderer
