@@ -1,6 +1,11 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
+//github.com/andrmoel/astronomy-bundle-js
+//www.npmjs.com/package/astronomy-bundle
+import { createTimeOfInterest } from "astronomy-bundle/time";
+import { createEarth } from "astronomy-bundle/earth";
+
 class CelestialObject {
   constructor(scene, name, position = new THREE.Vector3(0, 0, 0), rotSpeed = 0.005, tilt = 0.5) {
     this.name = name;
@@ -13,7 +18,18 @@ class CelestialObject {
     this.name == "sun" && this._OnSunLoad(); //run _OnSunLoad() if constructed object is "sun"
   }
 
-  rotate(factor = 1) {
+  async SetPosition() {
+    const date = new Date("2017-12-02 15:30:00");
+    const toi = createTimeOfInterest.fromDate(date);
+    const earth = createEarth(toi);
+    const coords = await earth.getHeliocentricEclipticRectangularDateCoordinates();
+    console.log(coords);
+    const factor = 250;
+    this.transform.position.set(coords.x * factor, coords.z * factor, coords.y * factor); //switch z & y bc. astronomy library uses different axes
+    console.log(this.transform.position);
+  }
+
+  Rotate(factor = 1) {
     this.transform && (this.transform.rotation.y += this.rotSpeed * factor);
   }
 
@@ -33,6 +49,7 @@ class CelestialObject {
     this.transform.position.set(this.initialPos.x, this.initialPos.y, this.initialPos.z);
     this.transform.rotation.x = this.tilt;
     this.scene.add(this.transform);
+    this.name == "earth" && this.SetPosition();
   }
 
   _OnSunLoad() {

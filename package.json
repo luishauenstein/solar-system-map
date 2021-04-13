@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/luishauenstein/solar-system-map#readme",
   "dependencies": {
+    "astronomy-bundle": "^6.0.4",
     "three": "^0.127.0"
   },
   "devDependencies": {

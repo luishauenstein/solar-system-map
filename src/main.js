@@ -35,8 +35,8 @@ const pluto = new CelestialObject(scene, "pluto", new THREE.Vector3(1200, 0, -0)
 function animate() {
   requestAnimationFrame(animate);
 
-  sun.rotate();
-  earth.rotate();
+  //sun.Rotate();
+  //earth.Rotate();
 
   renderer.render(scene, camera);
 }
