@@ -10,6 +10,17 @@ class CelestialObject {
     this.initialPos = position;
     this.LoadGLTF();
     this.scene = scene;
+    this.name == "sun" && this._OnSunLoad(); //run _OnSunLoad() if constructed object is "sun"
+  }
+
+  rotate(factor = 1) {
+    this.transform && (this.transform.rotation.y += this.rotSpeed * factor);
+  }
+
+  CreatePointLight(position) {
+    const light1 = new THREE.PointLight(0xffffff, 1, 2000, 2);
+    light1.position.set(position.x, position.y, position.z);
+    this.scene.add(light1);
   }
 
   LoadGLTF() {
@@ -24,8 +35,14 @@ class CelestialObject {
     this.scene.add(this.transform);
   }
 
-  rotate(factor = 1) {
-    this.transform && (this.transform.rotation.y += this.rotSpeed * factor);
+  _OnSunLoad() {
+    const lightdist = 110;
+    this.CreatePointLight(new THREE.Vector3(lightdist, 0, 0));
+    this.CreatePointLight(new THREE.Vector3(-lightdist, 0, 0));
+    this.CreatePointLight(new THREE.Vector3(0, lightdist, 0));
+    this.CreatePointLight(new THREE.Vector3(0, -lightdist, 0));
+    this.CreatePointLight(new THREE.Vector3(0, 0, lightdist));
+    this.CreatePointLight(new THREE.Vector3(0, 0, -lightdist));
   }
 }
 
