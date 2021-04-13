@@ -6,7 +6,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 module.exports = {
   entry: "./src/main.js",
   devServer: {
-    //IMPORTANT: dev server displays webgl content very blurry, quality is better in production build
+    //IMPORTANT: dev server displays webgl content blurry, quality is better in production build
     contentBase: "./dist",
   },
   output: {

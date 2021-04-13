@@ -1,6 +1,5 @@
-src/three/
-
-models/
-!models/ readme.md
+src/models/
+!src/models/ readme.md
 
 node_modules/
+dist/
