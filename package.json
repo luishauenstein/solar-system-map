@@ -1,0 +1,25 @@
+{
+  "name": "solar-system-map",
+  "version": "1.0.0",
+  "description": "solar-system-map",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luishauenstein/solar-system-map.git"
+  },
+  "author": "Luis Hauenstein",
+  "bugs": {
+    "url": "https://github.com/luishauenstein/solar-system-map/issues"
+  },
+  "homepage": "https://github.com/luishauenstein/solar-system-map#readme",
+  "dependencies": {
+    "three": "^0.127.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.32.0",
+    "webpack-cli": "^4.6.0"
+  }
+}
