@@ -4,6 +4,8 @@ Javascript
 
 Three.js Framework
 
+Bundling with Webpack
+
 # Astronomy NPM Library:
 
 https://www.npmjs.com/package/astronomy-bundle#astronomical-objects-coordinates
