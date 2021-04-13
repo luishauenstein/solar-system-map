@@ -28,15 +28,14 @@ class CelestialObject {
     this._AssignAstronomyObj(); //method get correct create[Planet] function from astronomy library
   }
 
-  async SetPosition() {
-    const date = new Date("2021-04-13 15:30:00");
+  async SetPositionByDate(date) {
     const toi = createTimeOfInterest.fromDate(date);
     const astronomyObject = this.astronomy(toi);
     const coords = await astronomyObject.getHeliocentricEclipticRectangularDateCoordinates();
     this.transform.position.set(coords.x * this.rangeFactor, coords.z * this.rangeFactor, coords.y * this.rangeFactor); //switch z & y bc. astronomy library uses different axes
-    console.log(
-      `${this.name} pos: x${this.transform.position.x} y${this.transform.position.y} z${this.transform.position.z}`
-    );
+    // console.log(
+    //   `${this.name} pos: x${this.transform.position.x} y${this.transform.position.y} z${this.transform.position.z}`
+    // );
   }
 
   Rotate(factor = 1) {
@@ -44,7 +43,7 @@ class CelestialObject {
   }
 
   _CreatePointLight(position) {
-    const light1 = new THREE.PointLight(0xffffff, 1, 2000, 2);
+    const light1 = new THREE.PointLight(0xffffff, 1, 3000, 1);
     light1.position.set(position.x, position.y, position.z);
     this.scene.add(light1);
   }
@@ -59,7 +58,7 @@ class CelestialObject {
     this.transform.position.set(this.initialPos.x, this.initialPos.y, this.initialPos.z);
     this.transform.rotation.x = this.tilt;
     this.scene.add(this.transform);
-    this.name != "sun" && this.SetPosition();
+    this.name != "sun" && this.SetPositionByDate(new Date()); //today's date
   }
 
   _OnSunLoad() {

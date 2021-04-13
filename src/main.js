@@ -19,8 +19,8 @@ camera.lookAt(0, 0, 0);
 const controls = new OrbitControls(camera, renderer.domElement);
 
 //LIGHT EXPERIMENTS
-//scene.add(new THREE.AmbientLight(0x101010));
-scene.add(new THREE.AmbientLight(0xffffff));
+scene.add(new THREE.AmbientLight(0x101010));
+//scene.add(new THREE.AmbientLight(0xffffff));
 
 const sun = new CelestialObject(scene, "sun", new THREE.Vector3(0, 0, 0), 250, 0.001);
 const mercury = new CelestialObject(scene, "mercury", new THREE.Vector3(100, 0, 50), 300);
@@ -32,9 +32,15 @@ const saturn = new CelestialObject(scene, "saturn", new THREE.Vector3(550, 0, -1
 const uranus = new CelestialObject(scene, "uranus", new THREE.Vector3(950, 0, -0), 55);
 const neptune = new CelestialObject(scene, "neptune", new THREE.Vector3(1100, 0, -0), 50);
 
+const date = new Date();
+
 function animate() {
   requestAnimationFrame(animate);
 
+  date.setDate(date.getDate() + 1);
+
+  earth.transform && earth.SetPositionByDate(date);
+  mars.transform && mars.SetPositionByDate(date);
   //sun.Rotate();
   //earth.Rotate();
 
