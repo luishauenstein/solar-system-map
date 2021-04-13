@@ -9,31 +9,31 @@ import {
   createMercury,
   createVenus,
   createMars,
-  createSaturn,
   createJupiter,
+  createSaturn,
   createUranus,
   createNeptune,
 } from "astronomy-bundle/planets";
 
 class CelestialObject {
-  constructor(scene, name, position = new THREE.Vector3(0, 0, 0), rotSpeed = 0.005, tilt = 0.5) {
+  constructor(scene, name, position = new THREE.Vector3(0, 0, 0), rangeFactor = 250, rotSpeed = 0.005, tilt = 0.5) {
+    this.scene = scene;
     this.name = name;
     this.url = `./models/${name}.gltf`;
+    this.initialPos = position;
+    this.rangeFactor = rangeFactor;
     this.rotSpeed = rotSpeed;
     this.tilt = tilt;
-    this.initialPos = position;
     this._LoadGLTF();
-    this.scene = scene;
     this._AssignAstronomyObj(); //method get correct create[Planet] function from astronomy library
   }
 
   async SetPosition() {
-    const date = new Date("2017-12-02 15:30:00");
+    const date = new Date("2021-04-13 15:30:00");
     const toi = createTimeOfInterest.fromDate(date);
     const astronomyObject = this.astronomy(toi);
     const coords = await astronomyObject.getHeliocentricEclipticRectangularDateCoordinates();
-    const factor = 250;
-    this.transform.position.set(coords.x * factor, coords.z * factor, coords.y * factor); //switch z & y bc. astronomy library uses different axes
+    this.transform.position.set(coords.x * this.rangeFactor, coords.z * this.rangeFactor, coords.y * this.rangeFactor); //switch z & y bc. astronomy library uses different axes
     console.log(
       `${this.name} pos: x${this.transform.position.x} y${this.transform.position.y} z${this.transform.position.z}`
     );
@@ -89,11 +89,11 @@ class CelestialObject {
       case "mars":
         this.astronomy = (i) => createMars(i);
         break;
-      case "saturn":
-        this.astronomy = (i) => createSaturn(i);
-        break;
       case "jupiter":
         this.astronomy = (i) => createJupiter(i);
+        break;
+      case "saturn":
+        this.astronomy = (i) => createSaturn(i);
         break;
       case "uranus":
         this.astronomy = (i) => createUranus(i);
