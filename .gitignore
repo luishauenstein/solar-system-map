@@ -1,4 +1,6 @@
-three/
+src/three/
 
 models/
 !models/ readme.md
+
+node_modules/
