@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 import CelestialObject from "./CelestialObject.js";
+import updateModel from "./updateModel.js";
 
 //init webgl renderer
 const renderer = new THREE.WebGLRenderer();
@@ -31,6 +32,8 @@ const jupiter = new CelestialObject(scene, "jupiter", new THREE.Vector3(800, 0, 
 const saturn = new CelestialObject(scene, "saturn", new THREE.Vector3(550, 0, -100), 70);
 const uranus = new CelestialObject(scene, "uranus", new THREE.Vector3(950, 0, -0), 55);
 const neptune = new CelestialObject(scene, "neptune", new THREE.Vector3(1100, 0, -0), 50);
+//array given to updateModel() function:
+const updatePositionArray = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune];
 
 const date = new Date();
 
@@ -39,8 +42,10 @@ function animate() {
 
   date.setDate(date.getDate() + 1);
 
-  earth.transform && earth.SetPositionByDate(date);
-  mars.transform && mars.SetPositionByDate(date);
+  //updatePositionArray[0].tr && updatePositionArray[0].SetPositionByDate(date);
+  for (const element of updatePositionArray) {
+    element.transform && element.SetPositionByDate(date);
+  }
   //sun.Rotate();
   //earth.Rotate();
 
