@@ -13,11 +13,13 @@ const scene = new THREE.Scene();
 
 //init camera
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
-camera.position.set(0, 500, 0);
-camera.lookAt(0, 0, 0);
+// camera.position.set(0, 500, 0);
+// camera.lookAt(0, 0, 0);
+camera.position.set(-217, -125);
+camera.lookAt(-217, 0, -125);
 
 //orbit controls for camera
-const controls = new OrbitControls(camera, renderer.domElement);
+//const controls = new OrbitControls(camera, renderer.domElement);
 
 //LIGHT EXPERIMENTS
 scene.add(new THREE.AmbientLight(0x101010));
@@ -41,10 +43,11 @@ function animate() {
   requestAnimationFrame(animate);
 
   date.setDate(date.getDate() + 1);
-
+  //console.log(earth.transform.rotation.y);
+  earth.transform && (earth.transform.rotation.y = 6.25);
+  //console.log(earth.transform.position);
   //updatePositionArray[0].tr && updatePositionArray[0].SetPositionByDate(date);
-  updateModel(updatePositionArray, date);
-  //sun.Rotate();
+  //updateModel(updatePositionArray, date);
 
   renderer.render(scene, camera);
 }
