@@ -1,9 +1,10 @@
-import CelestialObject from "./CelestialObject.js";
+//updates model fitting to datetime
 
 const updateModel = (planetaryObjects, datetime) => {
-  planetaryObjects.forEach((obj) => {
-    obj.transform && obj.setPositionByDate(datetime);
-  });
+  for (const planet of planetaryObjects) {
+    //planet.SetPositionByDate(datetime);
+    planet.Rotate();
+  }
 };
 
 export default updateModel;

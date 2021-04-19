@@ -43,11 +43,8 @@ function animate() {
   date.setDate(date.getDate() + 1);
 
   //updatePositionArray[0].tr && updatePositionArray[0].SetPositionByDate(date);
-  for (const element of updatePositionArray) {
-    element.transform && element.SetPositionByDate(date);
-  }
+  updateModel(updatePositionArray, date);
   //sun.Rotate();
-  //earth.Rotate();
 
   renderer.render(scene, camera);
 }

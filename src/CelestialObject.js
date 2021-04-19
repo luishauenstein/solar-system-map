@@ -29,13 +29,16 @@ class CelestialObject {
   }
 
   async SetPositionByDate(date) {
-    const toi = createTimeOfInterest.fromDate(date);
-    const astronomyObject = this.astronomy(toi);
-    const coords = await astronomyObject.getHeliocentricEclipticRectangularDateCoordinates();
-    this.transform.position.set(coords.x * this.rangeFactor, coords.z * this.rangeFactor, coords.y * this.rangeFactor); //switch z & y bc. astronomy library uses different axes
-    // console.log(
-    //   `${this.name} pos: x${this.transform.position.x} y${this.transform.position.y} z${this.transform.position.z}`
-    // );
+    if (this.transform) {
+      const toi = createTimeOfInterest.fromDate(date);
+      const astronomyObject = this.astronomy(toi);
+      const coords = await astronomyObject.getHeliocentricEclipticRectangularDateCoordinates();
+      this.transform.position.set(
+        coords.x * this.rangeFactor,
+        coords.z * this.rangeFactor,
+        coords.y * this.rangeFactor
+      ); //switch z & y bc. astronomy library uses different axes
+    }
   }
 
   Rotate(factor = 1) {
