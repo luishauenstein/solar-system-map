@@ -16,11 +16,10 @@ import {
 } from "astronomy-bundle/planets";
 
 class CelestialObject {
-  constructor(scene, name, position = new THREE.Vector3(0, 0, 0), rangeFactor = 250, rotSpeed = 0.005, tilt = 0.5) {
+  constructor(scene, name, rangeFactor = 250, rotSpeed = 0.005, tilt = 0.5) {
     this.scene = scene;
     this.name = name;
     this.url = `./models/${name}.gltf`;
-    this.initialPos = position;
     this.rangeFactor = rangeFactor;
     this.rotSpeed = rotSpeed;
     this.tilt = tilt;
@@ -58,7 +57,7 @@ class CelestialObject {
 
   _OnLoaded(obj) {
     this.transform = obj;
-    this.transform.position.set(this.initialPos.x, this.initialPos.y, this.initialPos.z);
+    this.transform.position.set(0, 0, 0);
     this.transform.rotation.x = this.tilt;
     this.scene.add(this.transform);
     this.name != "sun" && this.SetPositionByDate(new Date()); //today's date
