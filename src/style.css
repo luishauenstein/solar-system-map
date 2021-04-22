@@ -8,9 +8,13 @@ canvas {
 }
 
 .datetime {
+  position: absolute;
+  top: 0%;
+  right: 0%;
   width: 200px;
-  height: 100px;
-  background-color: rgb(216, 42, 42);
-  z-index: 1;
-  font-size: 4em;
+  height: 50px;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
